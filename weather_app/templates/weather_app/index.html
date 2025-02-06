@@ -1,0 +1,71 @@
+{% extends 'weather_app/base.html' %}
+
+{% block content %}
+<div class="max-w-md mx-auto bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden md:max-w-2xl p-6">
+    <h2 class="text-2xl font-bold mb-6 text-center text-gray-800 dark:text-white">Weather Forecast</h2>
+    
+    <form method="POST" class="mb-6">
+        {% csrf_token %}
+        <div class="flex space-x-4">
+            <input type="text" name="city" placeholder="Enter city name" 
+                   class="flex-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white dark:border-gray-600"
+                   required>
+            <button type="submit" 
+                    class="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                Search
+            </button>
+        </div>
+    </form>
+
+    {% if error %}
+        <div class="text-red-500 text-center mb-4">{{ error }}</div>
+    {% endif %}
+
+    {% if temperature %}
+        <div class="text-center">
+            <h3 class="text-xl font-semibold mb-4 text-gray-800 dark:text-white">Weather in {{ city }}</h3>
+            <div class="grid grid-cols-2 gap-4 mb-4">
+                <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
+                    <p class="text-gray-600 dark:text-gray-400">Temperature</p>
+                    <p class="text-2xl font-bold text-gray-800 dark:text-white">{{ temperature }}°C</p>
+                </div>
+                <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
+                    <p class="text-gray-600 dark:text-gray-400">Humidity</p>
+                    <p class="text-2xl font-bold text-gray-800 dark:text-white">{{ humidity }}%</p>
+                </div>
+            </div>
+            <div class="mb-4">
+                <p class="text-lg capitalize text-gray-800 dark:text-white">{{ description }}</p>
+                {% if icon %}
+                    <img src="http://openweathermap.org/img/w/{{ icon }}.png" 
+                         alt="Weather icon" 
+                         class="mx-auto mt-2">
+                {% endif %}
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+                <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
+                    <p class="text-gray-600 dark:text-gray-400">Wind Speed</p>
+                    <p class="text-xl font-bold text-gray-800 dark:text-white">{{ wind_speed }} m/s</p>
+                </div>
+                <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
+                    <p class="text-gray-600 dark:text-gray-400">Pressure</p>
+                    <p class="text-xl font-bold text-gray-800 dark:text-white">{{ pressure }} hPa</p>
+                </div>
+            </div>
+        </div>
+        <div class="mt-6">
+            <h4 class="text-lg font-semibold mb-2 text-gray-800 dark:text-white">5-Day Forecast</h4>
+            <div class="grid grid-cols-5 gap-2">
+                {% for day in forecast %}
+                    <div class="bg-gray-50 dark:bg-gray-700 p-2 rounded-lg text-center">
+                        <p class="text-sm text-gray-600 dark:text-gray-400">{{ day.date }}</p>
+                        <img src="http://openweathermap.org/img/w/{{ day.icon }}.png" alt="Weather icon" class="mx-auto">
+                        <p class="text-sm font-bold text-gray-800 dark:text-white">{{ day.temp }}°C</p>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
+

@@ -4,3 +4,14 @@ db.sqlite3
 .env
 staticfiles
 .vercel
+
+
+# Virtual Environment
+myenv/
+myenv
+*.pyc
+__pycache__/
+db.sqlite3
+.env
+.vercel/
+staticfiles/

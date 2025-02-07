@@ -4,7 +4,7 @@
 A Django-based weather application providing real-time weather information with fetches weather insights from OpenWeather API.
 
 ## Live Demo
-View the prject - https://weather-project-beta-ashy.vercel.app/
+View the project - https://weather-project-beta-ashy.vercel.app/
 
 ## Prerequisites
 - Python (Version 3.9)
